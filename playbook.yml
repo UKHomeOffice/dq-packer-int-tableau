@@ -11,10 +11,11 @@
           - UpdateRollups
         state: installed
 
-    - name: Rename computer
+    - name: Firewall rules
       win_shell: |
-        Rename-Computer -NewName INTERNAL-TABLEAU1
-
+        Set-NetFirewallProfile -Profile Domain -Enabled False
+        Set-NetFirewallRule -Group "@FirewallAPI.dll,-28502" -Direction Inbound -Profile Domain -Enabled True
+        
     - name: Create tmp directory
       win_file:
         path: C:\tmp\install
@@ -75,7 +76,7 @@
 
     - name: Convert line endings from Linux to Windows (PowerShell)
       win_shell: '(Get-Content "C:\tmp\install\partitioning.txt") -replace "`n", "`r`n" | Set-Content "C:\tmp\install\volume_partitioning.txt"'
-        
+
     - name: Install Tableau cmd
       win_shell: |
         c:\tmp\install\TabcmdInstaller-x64.exe /VERYSILENT /NORESTART

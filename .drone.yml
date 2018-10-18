@@ -1,19 +1,19 @@
 pipeline:
 
   validate:
-    image: chrisns/packer-ansible
+    image: hashicorp/packer
     commands:
       - export HOME=/home/packer
       - packer validate packer.json
 
   inspect:
-    image: chrisns/packer-ansible
+    image: hashicorp/packer
     commands:
       - export HOME=/home/packer
       - packer inspect packer.json
 
   build:
-    image: chrisns/packer-ansible
+    image: hashicorp/packer
     commands:
       - export HOME=/home/packer
       - packer build packer.json
